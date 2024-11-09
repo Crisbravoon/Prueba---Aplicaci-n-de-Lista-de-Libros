@@ -4,21 +4,22 @@ import bookData from '../../data/books.json'
 
 const initialState = {
     books: bookData.library,
+    readingList: [],
 };
 
 export const bookSlice = createSlice({
     name: 'books',
     initialState,
     reducers: {
-        addToList: (state, action) => { 
-            return {...state, books: [...state.books, action.payload] };
+
+        addToReadingList: (state, action) => {
+            const bookToAdd = action.payload;
+            // Usamos un condicional para evitar agregar el mismo libro más de una vez
+            !state.readingList.some(book => book.book.ISBN === bookToAdd.book.ISBN) && state.readingList.push(bookToAdd);
         },
 
-        removeBook: (state, action) => {
-            return state.books.filter(book => book.id !== action.payload);
-        },
     }
 });
 
-export const { removeBook } = bookSlice.actions;
+export const { addToReadingList } = bookSlice.actions;
 export default bookSlice.reducer;
