@@ -13,12 +13,15 @@ export const bookSlice = createSlice({
     reducers: {
 
         addToReadingList: (state, action) => {
-            const bookToAdd = action.payload;
-            // Usamos un condicional para evitar agregar el mismo libro más de una vez
-            !state.readingList.some(book => book.book.ISBN === bookToAdd.book.ISBN) && state.readingList.push(bookToAdd);
-        },
 
-    }
+            //Guardamos los libros que se leeran.
+            const bookToAdd = action.payload;
+            
+            //Validamos si el ID del book no son iguales, de no ser así lo agrega a readingList.
+            if(!state.readingList.find(book => book.book.ISBN === bookToAdd.book.ISBN)){
+                state.readingList.push(bookToAdd);
+            }
+        }},
 });
 
 export const { addToReadingList } = bookSlice.actions;
