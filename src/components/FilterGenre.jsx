@@ -7,7 +7,6 @@ import { addToReadingList } from '../features/books/bookSlice';
 const FilterGenre = ({ books }) => {
 
     const [selectedGenre, setSelectedGenre] = useState();
-    const [selectedBook, setSelectedBook] = useState();
 
     const readingList = useSelector(state => state.books.readingList);
 
@@ -38,7 +37,6 @@ const FilterGenre = ({ books }) => {
     // Función para agregar un libro a la lista de lectura
     const agregarLibro = (book) => {
         dispatch(addToReadingList(book));
-        setSelectedBook();  // Resetear el libro seleccionado
     };
 
     return (
@@ -57,16 +55,12 @@ const FilterGenre = ({ books }) => {
                     <div className="flex flex-col items-center p-4 bg-slate-400 rounded" key={item.book.ISBN}>
                         <img className="w-[150px] h-[200px] rounded object-cover"
                             src={item.book.cover}
-                            alt={item.book.title}
                         />
                         <p className="mt-2 text-center font-medium">{item.book.title}</p>
                         <p className="text-sm text-slate-300">{item.book.author.name}</p>
-                        <button className={`mt-2 px-4 py-2 rounded transition-colors ${isBookInReadingList(item)
-                            ? 'bg-red-700 cursor-not-allowed'
-                            : 'bg-blue-500 hover:bg-blue-600'
-                            }`}
+                        <button className={`mt-2 px-4 py-2 rounded transition-colors 
+                        ${isBookInReadingList(item) ? 'bg-red-700 cursor-not-allowed' : 'bg-blue-500 hover:bg-gray-800'}`}
                             onClick={() => agregarLibro(item)}
-                            disabled={selectedBook === item}
                         >
                             Agregar
                         </button>
